@@ -28,10 +28,12 @@ public final class ConnectionUtil {
 
     public static String getUrl(DatabaseName databaseName) {
         return String.format(
-            "jdbc:mysql://%s:%s/%s?useUnicode=true&characterEncoding=UTF-8",
+            "jdbc:mysql://%s:%s/%s?useUnicode=true&characterEncoding=%s&serverTimezone=%s",
             DATABASE_HOST,
             DATABASE_PORT,
-            databaseName.name().toLowerCase());
+            databaseName.name().toLowerCase(),
+            "UTF-8",
+            "Europe/Budapest");
     }
 
     public static Connection getConnection(DatabaseName databaseName) {
