@@ -12,6 +12,8 @@ repositories {
 dependencies {
     compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'org.webjars:jquery:3.2.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.8.1'
     compile 'org.springframework:spring-jdbc:4.3.8.RELEASE'
     runtime 'mysql:mysql-connector-java:6.0.6'
 }
