@@ -1,6 +1,7 @@
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+import util.ConnectionUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,56 +12,69 @@ public class DatabaseDAO implements TodoDAO {
 
     public static final DatabaseDAO INSTANCE = new DatabaseDAO();
 
-    public static Connection connection;
+    public static Connection connection = ConnectionUtil.getConnection(ConnectionUtil.DatabaseName.bfa);
 
     private DatabaseDAO() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Todo?useSSL=false", "root", "root");
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
     }
-
-
-//    @Override
-//    public Task returnTaskById(Integer id) {
-//        return null;
-//    }
 
     @Override
     public List<Task> returnAll(String user) {
         String query = "SELECT * FROM Tasks WHERE user = '" + user + "';";
+        List<Task> result = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet reultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Integer id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String username = resultSet.getString("user");
+                boolean completion = true;
+                if (resultSet.getInt("completion") == 0) { completion = !completion; }
+                result.add(new Task(id, name, completion, username));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    return null;
+        if (result.equals(null)) { return null; }
+        return result;
     }
 
     @Override
     public List<Task> returnFinished(String user) {
         String query = "SELECT * FROM Tasks WHERE user = '" + user + "' AND completion = 1;";
+        List<Task> result = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet reultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Integer id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String username = resultSet.getString("user");
+                result.add(new Task(id, name, true, username));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     @Override
     public List<Task> returnUnFinished(String user) {
         String query = "SELECT * FROM Tasks WHERE user = '" + user + "' AND completion = 0;";
+        List<Task> result = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet reultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                Integer id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String username = resultSet.getString("user");
+                result.add(new Task(id, name, false, username));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     @Override
@@ -96,14 +110,4 @@ public class DatabaseDAO implements TodoDAO {
         }
     }
 
-    public static String resultSetToJson(Connection connection, String query) {
-        List<Map<String, Object>> listOfMaps = null;
-        try {
-            QueryRunner queryRunner = new QueryRunner();
-            listOfMaps = queryRunner.query(connection, query, new MapListHandler());
-        } catch (SQLException se) {
-            throw new RuntimeException("Couldn't query the database.", se);
-        }
-        return new Gson().toJson(listOfMaps);
-    }
 }

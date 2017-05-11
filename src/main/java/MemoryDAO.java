@@ -16,15 +16,6 @@ public class MemoryDAO implements TodoDAO {
     private MemoryDAO() {
     }
 
-//    @Override
-//    public Task returnTaskById(Integer id) {
-//        return getDatabase()
-//            .stream()
-//            .filter(Task -> Task.getId().equals(id))
-//            .findAny()
-//            .orElse(null);
-//    }
-
     @Override
     public List<Task> returnAll(String user) {
 

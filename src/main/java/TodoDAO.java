@@ -5,7 +5,6 @@ import java.util.List;
  */
 public interface TodoDAO {
 
-    //Task returnTaskById(Integer id);
     List<Task> returnAll(String user);
     List<Task> returnFinished(String user);
     List<Task> returnUnFinished(String user);

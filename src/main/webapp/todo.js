@@ -9,6 +9,10 @@ function myfunction(json) {
     document.getElementsByClassName("content").item(0).innerHTML = "";
 
     for(var i = 0; i < json.length; i++) {
+
+        var div = document.createElement("div");
+        div.setAttribute("id", "todoContainer")
+
         var li = document.createElement("li");
         li.setAttribute("id", json[i].id);
         li.setAttribute("status", json[i].completion);
@@ -16,7 +20,6 @@ function myfunction(json) {
         var checkbox = document.createElement("input");
 
         checkbox.setAttribute("type", "checkbox");
-        //checkbox.setAttribute("id", "cb" + json[i].id);
         checkbox.setAttribute("onclick", "toggleStatus(" + json[i].id + ")");
         if (json[i].completion == "true") {
             checkbox.checked = true;
@@ -25,15 +28,15 @@ function myfunction(json) {
         var deleteButton = document.createElement("button");
 
         deleteButton.setAttribute("type", "button");
-        deleteButton.innerHTML = "X";
-        //deleteButton.setAttribute("id", "db" + json[i].id);
         deleteButton.setAttribute("onclick", "deleteTask(" + json[i].id + ")");
 
         var br = document.createElement("br");
 
-        document.getElementsByClassName("content").item(0).appendChild(checkbox);
-        document.getElementsByClassName("content").item(0).appendChild(li);
-        document.getElementsByClassName("content").item(0).appendChild(deleteButton);
+        div.appendChild(checkbox)
+        div.appendChild(li)
+        div.appendChild(deleteButton)
+
+        document.getElementsByClassName("content").item(0).appendChild(div);
         document.getElementsByClassName("content").item(0).appendChild(br);
         $("#" + json[i].id).text(json[i].name);
 

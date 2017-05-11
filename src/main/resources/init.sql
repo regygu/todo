@@ -15,3 +15,11 @@ CREATE TABLE `hi` (
 INSERT INTO `hi`(`lang`, `msg`) VALUES ('hu', 'Szia <span class="name">%s</span>, mi a helyzet?');
 INSERT INTO `hi`(`lang`, `msg`) VALUES ('en', 'Hi <span class="name">%s</span>, what\'s up?');
 INSERT INTO `hi`(`lang`, `msg`) VALUES ('pl', 'Cześć Joe <span class="name">%s</span>, co się stało?');
+
+CREATE TABLE `Tasks` (
+  `id` INTEGER AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `completion` TINYINT NOT NULL,
+  `user` VARCHAR(45) NOT NULL,
+  PRIMARY KEY(`id`)
+);

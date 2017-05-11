@@ -30,17 +30,18 @@
 
 
 <form method="post" action="/TodoServlet">
-    <input name="todo">
+    <input id="todoinput" name="todo" placeholder="Enter to-do here...">
 </form>
 <br>
 
 <div class="content"></div>
 
 <br>
-<button onclick="setCookie('all')">All</button>
-<button onclick="setCookie('unfinished')">Unfinished</button>
-<button onclick="setCookie('finished')">Finished</button>
-
+<div id="buttonContainer">
+    <button  id="button1" onclick="setCookie('finished')">Finished</button>
+    <button  id="button2" onclick="setCookie('all')">All</button>
+    <button  id="button3" onclick="setCookie('unfinished')">Unfinished</button>
+</div>
 <!--<a href="..">Go back</a>-->
 </body>
 </html>

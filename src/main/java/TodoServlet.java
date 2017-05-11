@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
 @WebServlet ("/TodoServlet")
 public class TodoServlet extends HttpServlet {
 
-
+    TodoDAO DAO = DatabaseDAO.INSTANCE;
     MemoryDAO memoDAO = MemoryDAO.INSTANCE;
 
     @Override
@@ -33,16 +34,14 @@ public class TodoServlet extends HttpServlet {
             }
         }
 
-        List<Task> list;
-
+        List<Task> list = new ArrayList<>();
         if (requestType.equals("unfinished")) {
-            list = memoDAO.returnUnFinished(session.getAttribute("user").toString());
+            list = DAO.returnUnFinished(session.getAttribute("user").toString());
         } else if (requestType.equals("finished")) {
-            list = memoDAO.returnFinished(session.getAttribute("user").toString());
+            list = DAO.returnFinished(session.getAttribute("user").toString());
         } else {
-            list = memoDAO.returnAll(session.getAttribute("user").toString());
+            list = DAO.returnAll(session.getAttribute("user").toString());
         }
-
         resp.getWriter().print(convertToJSON(list));
     }
 
@@ -59,7 +58,7 @@ public class TodoServlet extends HttpServlet {
         }
 
         String name = req.getParameter("todo");
-        memoDAO.addTask(name, user);
+        DAO.addTask(name, user);
         resp.sendRedirect("name.jsp");
     }
 

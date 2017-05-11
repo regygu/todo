@@ -12,18 +12,19 @@ import java.io.IOException;
 @WebServlet (urlPatterns = {"/EditServlet", "/EditServlet/*"})
 public class EditServlet extends HttpServlet {
 
+    TodoDAO DAO = DatabaseDAO.INSTANCE;
     MemoryDAO memoDAO = MemoryDAO.INSTANCE;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = Integer.valueOf(req.getParameter("id"));
-        memoDAO.toggleStatus(id);
+        DAO.toggleStatus(id);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer index = Integer.valueOf(req.getRequestURI().lastIndexOf("/"));
         Integer id = Integer.valueOf(req.getRequestURI().substring(index + 1));
-        memoDAO.deleteTask(id);
+        DAO.deleteTask(id);
     }
 }
