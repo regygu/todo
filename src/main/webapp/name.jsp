@@ -7,10 +7,40 @@
     <title>Name</title>
     <script src="webjars/jquery/3.2.0/jquery.min.js"></script>
     <script src="name.js"></script>
+    <script src="todo.js"></script>
     <link href="name.css" rel="stylesheet"/>
+    <script>
+        $(document).ready(function() {
+            setUpCookies("${username}")
+        })
+
+        $(document).ready(function () {
+            $.get( "/TodoServlet", function( data ) {
+                myfunction( data );
+                })
+            })
+    </script>
+
 </head>
 <body>
-<h1>${msg}</h1>
-<a href="..">Go back</a>
+
+<h1>${msg} ${username}</h1>
+<br>
+
+
+
+<form method="post" action="/TodoServlet">
+    <input name="todo">
+</form>
+<br>
+
+<div class="content"></div>
+
+<br>
+<button onclick="setCookie('all')">All</button>
+<button onclick="setCookie('unfinished')">Unfinished</button>
+<button onclick="setCookie('finished')">Finished</button>
+
+<!--<a href="..">Go back</a>-->
 </body>
 </html>

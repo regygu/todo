@@ -1,3 +1,16 @@
 .name {
     color: red;
 }
+
+li {
+    display: inline-block;
+}
+
+li[status = true] {
+    color: green;
+    text-decoration: line-through;
+}
+
+li[status = false] {
+    color: red;
+}
