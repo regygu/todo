@@ -8,7 +8,6 @@ public final class ConnectionUtil {
 
     public enum DatabaseName {
 
-        TEST,
         BFA
     }
 
@@ -31,9 +30,13 @@ public final class ConnectionUtil {
             "jdbc:mysql://%s:%s/%s?useUnicode=true&characterEncoding=%s&serverTimezone=%s",
             DATABASE_HOST,
             DATABASE_PORT,
-            databaseName.name().toLowerCase(),
+            databaseName == null ? "" : databaseName.name().toLowerCase(),
             "UTF-8",
             "Europe/Budapest");
+    }
+
+    public static Connection getConnection() {
+        return getConnection(null);
     }
 
     public static Connection getConnection(DatabaseName databaseName) {

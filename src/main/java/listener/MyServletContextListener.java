@@ -30,7 +30,7 @@ public final class MyServletContextListener implements ServletContextListener {
     }
 
     private void initializeDatabase() {
-        try (Connection conn = ConnectionUtil.getConnection(ConnectionUtil.DatabaseName.TEST)) {
+        try (Connection conn = ConnectionUtil.getConnection()) {
             ScriptUtils.executeSqlScript(conn, new EncodedResource(new ClassPathResource("/init.sql"), StandardCharsets.UTF_8));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
