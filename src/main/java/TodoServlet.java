@@ -51,15 +51,19 @@ public class TodoServlet extends HttpServlet {
         String user = "";
         Cookie[] cookies = req.getCookies();
 
-        for (Cookie cookie: cookies) {
+        for (Cookie cookie : cookies) {
             if (cookie.getName().equals("username")) {
                 user = cookie.getValue();
             }
         }
 
         String name = req.getParameter("todo");
-        DAO.addTask(name, user);
-        resp.sendRedirect("name.jsp");
+        if (name == "") {
+            resp.sendRedirect("name.jsp");
+        } else {
+            DAO.addTask(name, user);
+            resp.sendRedirect("name.jsp");
+        }
     }
 
       public String convertToJSON(List<Task> todoList) {
